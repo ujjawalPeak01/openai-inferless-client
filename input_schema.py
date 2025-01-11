@@ -3,7 +3,7 @@ INPUT_SCHEMA = {
         'datatype': 'STRING',
         'required': True,
         'shape': [1],
-        'example': ["There is a fine house in the forest"]
+        'example': ["[{\"role\":\"developer\",\"content\":\"You are a helpful assistant.\"},{\"role\":\"user\",\"content\":\"Hello!\"}]"]
     }
 }
 OPENAI_CLIENT_COMPATIBLITY = True
