@@ -25,7 +25,8 @@ class InferlessPythonModel:
             temperature=inputs["temperature"],
             messages=inputs["message"],
             presence_penalty=inputs["presence_penalty"],
-            seed=["seed"],
+            max_completion_tokens=inputs["max_completion_tokens"],
+            seed=inputs["seed"],
         )
         print(completion, flush=True)
         print()
