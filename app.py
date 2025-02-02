@@ -22,11 +22,11 @@ class InferlessPythonModel:
 
         completion = openai_client.chat.completions.create(
             model="gpt-4o-mini",
-            temperature=inputs["temperature"],
+            temperature=inputs.get("temperature", 0.7),
             messages=inputs["message"],
-            presence_penalty=inputs["presence_penalty"],
-            max_completion_tokens=inputs["max_completion_tokens"],
-            seed=inputs["seed"],
+            presence_penalty=inputs.get("presence_penalty", 0.5),
+            max_completion_tokens=inputs.get("max_completion_tokens", 256),
+            seed=inputs.get("seed", 1234),
         )
         print(completion, flush=True)
         print()
