@@ -34,13 +34,8 @@ class InferlessPythonModel:
             max_completion_tokens=max_completion_tokens,
             seed=seed,
         )
-        logging.info(completion)
-        print(completion, flush=True)
-        logging.info(completion.choices)
-        print(completion.choices, flush=True)
+        
         response_dict = completion.model_dump()
-        logging.info(response_dict)
-        print(response_dict, flush=True)
         return {"generated_text": json.dumps(response_dict)}
 
     # Perform any cleanup activity here
