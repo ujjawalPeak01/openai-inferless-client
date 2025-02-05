@@ -2,6 +2,7 @@ import json
 import os
 import numpy as np
 from openai import OpenAI
+import logging
 
 
 class InferlessPythonModel:
@@ -28,9 +29,8 @@ class InferlessPythonModel:
             max_completion_tokens=inputs.get("max_completion_tokens", 256),
             seed=inputs.get("seed", 1234),
         )
-        print(completion, flush=True)
-        print()
-        print(completion.choices, flush=True)
+        logging.info(completion)
+        logging.info(completion.choices, flush=True)
         return {"generated_text": "ABCD"}
 
     # perform any cleanup activity here
