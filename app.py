@@ -39,7 +39,9 @@ class InferlessPythonModel:
         logging.info(completion.choices)
         print(completion.choices, flush=True)
         response_dict = completion.model_dump()
-        return {"generated_text": response_dict}
+        logging.info(response_dict)
+        print(response_dict, flush=True)
+        return {"generated_text": json.dumps(response_dict)}
 
     # Perform any cleanup activity here
     def finalize(self, args):
