@@ -1,42 +1,37 @@
 import json
 import os
 import numpy as np
-from openai import OpenAI
 import logging
+from transformers import pipeline
 
 
 class InferlessPythonModel:
 
     # Implement the Load function here for the model
     def initialize(self):
-        pass
+        self.pipe = pipeline("text-generation", model="HuggingFaceTB/SmolLM2-360M-Instruct")
 
     # Function to perform inference 
     def infer(self, inputs):
-        OPEN_AI_API_KEY = os.environ.get("OPEN_AI_API_KEY")
-        OPEN_AI_ORG_ID = os.environ.get("OPEN_AI_ORG_ID")
-        openai_client = OpenAI(
-            api_key=OPEN_AI_API_KEY,
-            organization=OPEN_AI_ORG_ID
-        )
-
         # Ensure all numerical inputs are standard Python types
-        seed = int(inputs.get("seed", 1234))  # Convert to Python int
         temperature = float(inputs.get("temperature", 0.7))  # Convert to Python float
-        presence_penalty = float(inputs.get("presence_penalty", 0.5))  # Convert to Python float
-        max_completion_tokens = int(inputs.get("max_completion_tokens", 256))  # Convert to Python int
+        repetition_penalty = float(inputs.get("repetition_penalty", 0.5))  # Convert to Python float
+        max_length = int(inputs.get("max_length", 256))  # Convert to Python int
+        top_p = float(inputs.get("top_p", 0.9))
 
-        completion = openai_client.chat.completions.create(
-            model="gpt-4o-mini",
+        output = self.pipe(
+            inputs["message"], 
+            max_length=max_length,
             temperature=temperature,
-            messages=inputs["message"],
-            presence_penalty=presence_penalty,
-            max_completion_tokens=max_completion_tokens,
-            seed=seed,
+            repetition_penalty=repetition_penalty,
+            top_p=top_p,
+            do_sample=True
         )
-        
-        response_dict = completion.model_dump()
-        return {"generated_text": json.dumps(response_dict)}
+
+        assistant_response = [
+            msg for msg in output[0]['generated_text'] if msg.get("role") == "assistant"
+        ]
+        return {"choices": [{"message": assistant_response}]}
 
     # Perform any cleanup activity here
     def finalize(self, args):
