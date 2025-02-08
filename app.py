@@ -31,7 +31,7 @@ class InferlessPythonModel:
         assistant_response = [
             msg for msg in output[0]['generated_text'] if msg.get("role") == "assistant"
         ]
-        return {"choices": [{"message": assistant_response}]}
+        return json.dumps({"choices": [{"message": assistant_response}]})
 
     # Perform any cleanup activity here
     def finalize(self, args):
