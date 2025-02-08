@@ -14,9 +14,9 @@ class InferlessPythonModel:
     # Function to perform inference 
     def infer(self, inputs):
         # Ensure all numerical inputs are standard Python types
-        temperature = float(inputs.get("temperature", 0.7))  # Convert to Python float
-        repetition_penalty = float(inputs.get("repetition_penalty", 0.5))  # Convert to Python float
-        max_length = int(inputs.get("max_length", 256))  # Convert to Python int
+        temperature = float(inputs.get("temperature", 0.7))
+        repetition_penalty = float(inputs.get("repetition_penalty", 0.5))
+        max_length = int(inputs.get("max_length", 256))
         top_p = float(inputs.get("top_p", 0.9))
 
         output = self.pipe(
@@ -31,7 +31,7 @@ class InferlessPythonModel:
         assistant_response = [
             msg for msg in output[0]['generated_text'] if msg.get("role") == "assistant"
         ]
-        return {"choices": json.dumps([{"message": assistant_response}])}
+        return {"result": json.dumps([{"choices": assistant_response}])}
 
     # Perform any cleanup activity here
     def finalize(self, args):
