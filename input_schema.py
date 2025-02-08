@@ -11,23 +11,23 @@ INPUT_SCHEMA = {
         'shape': [1],
         'example': [0.7]
     },
-    "max_completion_tokens": {
+    "max_length": {
         'datatype': 'INT32',
         'required': False,
         'shape': [1],
         'example': [250]
     },
-    "presence_penalty": {
+    "repetition_penalty": {
         'datatype': 'FP32',
         'required': False,
         'shape': [1],
         'example': [0.5]
     },
-    "seed": {
-        'datatype': 'INT32',
+    "top_p": {
+        'datatype': 'FP32',
         'required': False,
         'shape': [1],
-        'example': [1234]
+        'example': [0.9]
     }
 }
 OPENAI_CLIENT_COMPATIBLITY = True
